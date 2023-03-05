@@ -14,19 +14,19 @@ const Wrapper = styled(Card)`
 export default function ArticleCard({ article }: { article: Article }) {
   return (
     <Wrapper>
+      <CardMedia sx={{ height: '150px', width: '100%' }} image={article.urlToImage} />
+      <CardHeader title={article.title} />
+      <CardContent>
+        <Typography variant="body1" component="p">
+          {`Source: ${article.source.name}`}
+        </Typography>
+        <Typography variant="body1" component="p">{article.description}</Typography>
+      </CardContent>
       <div>
-        <CardMedia sx={{ height: '150px', width: '100%' }} image={article.urlToImage} />
-        <CardHeader title={article.title} />
-        <CardContent>
-          <Typography variant="body1" component="p">
-            {`Source: ${article.source.name}`}
-          </Typography>
-          <Typography variant="body1" component="p">{article.description}</Typography>
-        </CardContent>
+        <CardActions>
+          <Button variant="contained" color="primary" href={article.url} target="_blank" sx={{ marginTop: '8px' }}>View Full Article</Button>
+        </CardActions>
       </div>
-      <CardActions>
-        <Button variant="contained" color="primary" href={article.url} target="_blank" sx={{ marginTop: '8px' }}>View Full Article</Button>
-      </CardActions>
     </Wrapper>
   );
 }
