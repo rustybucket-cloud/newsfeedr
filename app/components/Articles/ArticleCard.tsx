@@ -54,9 +54,15 @@ export default function ArticleCard({ article }: { article: Article }) {
   const getSummary = useCallback(async () => {
     setShowSummary(true);
     try {
-      const req = await fetch(`api/getSummary?url=${article.url}`);
-      const res = await req.json();
-      setSummary(res?.summary);
+      const existingSumReq = await fetch(`/isSummary?url=${article.url}`);
+      const existingSum = await existingSumReq.json();
+      if (existingSum.summary) setSummary(existingSum.summary);
+      else {
+        const req = await fetch(`api/getSummary?url=${article.url}`);
+        const res = await req.json();
+        setSummary(res?.summary);
+        await fetch(`/isSummary?url=${article.url}&fn=create&summary=${res?.summary}`);
+      }
     } catch (err) {
       console.error(err);
       setError('We were unable to get the article summary. The website may restrict access to this article.');

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from '@remix-run/react';
 import styled from '@emotion/styled';
-import { useTheme, Typography } from '@mui/material';
+import { useTheme, Typography, Button } from '@mui/material';
+import { useAuth0 } from '@auth0/auth0-react';
 
 interface Color {
   theme: {
@@ -72,6 +73,7 @@ const Nav = styled.nav`
     ul {
       display: flex;
       gap: 8px;
+      align-items: center;
     }
   }
 `;
@@ -106,6 +108,7 @@ const SVG_HEIGHT = BAR_HEIGHT * 6;
 export default function Header() {
   const [open, setOpen] = useState(false);
   const theme = useTheme();
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
 
   return (
     <Wrapper theme={theme.palette}>
@@ -114,8 +117,12 @@ export default function Header() {
         <ul className={open ? 'open' : ''}>
           <li><Link to="/">Trending</Link></li>
           <li><Link to="/search">Search</Link></li>
-          <li><Link to="/explore">Explore</Link></li>
-          <li><Link to="/profile">Profile</Link></li>
+          {isAuthenticated ? (
+            <>
+              <li><Link to="/explore">Explore</Link></li>
+              <li><Link to="/profile">Profile</Link></li>
+            </>
+          ) : <li><Button variant="text" onClick={() => loginWithRedirect()}>Login</Button></li>}
         </ul>
         {open
           ? <CloseButton onClick={() => setOpen((curr) => !curr)}><img src="/assets/icons/close.svg" alt="close" /></CloseButton>

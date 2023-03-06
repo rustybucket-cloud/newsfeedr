@@ -10,7 +10,7 @@ import {
 } from '@remix-run/react';
 import { withSentry } from '@sentry/remix';
 import { Header } from './components';
-import { ThemeProvider } from './contexts';
+import { ThemeProvider, AuthProvider } from './contexts';
 
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
@@ -42,9 +42,11 @@ function Layout() {
 
 function App() {
   return (
-    <ThemeProvider mode="LIGHT">
-      <Layout />
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider mode="LIGHT">
+        <Layout />
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
 

@@ -42,9 +42,11 @@ def get_summary(url):
     raise Exception("Nothing returned from article")
 
   openai.api_key = os.getenv("OPENAI_API_KEY")
+
+  text = results.text[:2048]
   data = openai.Completion.create(
-    model="text-davinci-003",
-    prompt=f"Summarize this: {results.text}",
+    model="ada",
+    prompt=f"Summarize this: {text}",
     max_tokens=100,
     temperature=0
   )

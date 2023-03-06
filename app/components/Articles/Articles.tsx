@@ -16,7 +16,7 @@ const Wrapper = styled.div`
 export default function Articles({ articles }: { articles: Article[]}) {
   return (
     <Wrapper>
-      {articles.map((article) => <ArticleCard key={article.title} article={article} />)}
+      {articles && articles.map((article) => <ArticleCard key={article.title} article={article} />)}
     </Wrapper>
   );
 }
