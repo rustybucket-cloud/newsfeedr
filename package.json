@@ -33,7 +33,7 @@
     "typescript": "^4.8.4"
   },
   "prisma": {
-    "schema": "db/schema.prisma"
+    "schema": "prisma/schema.prisma"
   },
   "engines": {
     "node": ">=14"
