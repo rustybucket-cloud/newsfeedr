@@ -21,11 +21,10 @@ export const loader = async () => {
   } catch (error) {
     console.error(error);
   }
-  console.log('Checked for recent request');
   const req = await fetch(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${process.env.NEWS_API_KEY}`);
   const data = await req.json();
   try {
-    await prisma.request.create({ data: { data: JSON.stringify(data) } });
+    await prisma.request.create({ data: { data: JSON.stringify(data), type: 'trending' } });
   } catch (error) {
     console.error(error);
   }

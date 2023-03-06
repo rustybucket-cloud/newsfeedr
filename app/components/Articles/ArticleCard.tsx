@@ -46,6 +46,21 @@ const LoadingIcon = styled(RotateRightIcon)`
   animation-iteration-count: infinite;
 `;
 
+const FlexButtons = styled(CardActions)`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  [data-btn] {
+    width: 100%;
+  }
+  @media only screen and (min-width: 480px) {
+    flex-direction: row;
+    [data-btn] {
+      width: initial;
+    }
+  }
+`;
+
 export default function ArticleCard({ article }: { article: Article }) {
   const [summary, setSummary] = useState();
   const [showSummary, setShowSummary] = useState(false);
@@ -81,10 +96,10 @@ export default function ArticleCard({ article }: { article: Article }) {
         {article.description && <Typography variant="body1" component="p">{article.description}</Typography>}
       </CardContent>
       <div>
-        <CardActions>
-          <Button variant="contained" color="primary" href={article.url} target="_blank" sx={{ marginTop: '8px' }}>View Full Article</Button>
-          <Button variant="contained" color="primary" onClick={getSummary} sx={{ marginTop: '8px' }}>Summarize This for Me</Button>
-        </CardActions>
+        <FlexButtons>
+          <Button data-btn variant="contained" color="primary" href={article.url} target="_blank" sx={{ marginTop: '8px' }}>View Full Article</Button>
+          <Button data-btn variant="contained" color="primary" onClick={getSummary} sx={{ marginTop: '8px' }}>Summarize This for Me</Button>
+        </FlexButtons>
       </div>
       <Modal
         open={showSummary}
