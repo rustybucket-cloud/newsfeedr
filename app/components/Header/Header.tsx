@@ -22,6 +22,14 @@ const Wrapper = styled.div`
   align-items: center;
   padding: 8px;
   background-color: ${({ theme }: Color) => theme.secondary.main};
+  a {
+    text-decoration: none;
+    color: black;
+  }
+`;
+
+const Logo = styled.span`
+  font-family: "Righteous", "Open Sans", sans-serif;
 `;
 
 const Nav = styled.nav`
@@ -101,7 +109,7 @@ export default function Header() {
 
   return (
     <Wrapper theme={theme.palette}>
-      <Typography variant="h4" component="p">Stay Informed</Typography>
+      <Link to="/"><Typography variant="h4" component="p"><Logo>NewsFeedr</Logo></Typography></Link>
       <Nav theme={theme.palette}>
         <ul className={open ? 'open' : ''}>
           <li><Link to="/">Trending</Link></li>

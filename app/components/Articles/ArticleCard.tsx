@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import {
-  Card, CardActions, CardContent, CardHeader, CardMedia, Button, Typography,
+  Card, CardActions, CardContent, CardHeader, CardMedia, Button, Typography, Modal, IconButton,
 } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import styled from '@emotion/styled';
 import type { Article } from '~/types';
 
@@ -11,7 +12,30 @@ const Wrapper = styled(Card)`
   justify-content: space-between;
 `;
 
+const HeaderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const ModalContent = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export default function ArticleCard({ article }: { article: Article }) {
+  const [summary, setSummary] = useState();
+  const [showSummary, setShowSummary] = useState(false);
+
+  const getSummary = useCallback(async () => {
+    setShowSummary(true);
+    const req = await fetch(`api/getSummary?url=${article.url}`);
+    const res = await req.json();
+    setSummary(res?.summary);
+  }, [article.url]);
+
   return (
     <Wrapper>
       <CardMedia sx={{ height: '150px', width: '100%' }} image={article.urlToImage} />
@@ -20,13 +44,34 @@ export default function ArticleCard({ article }: { article: Article }) {
         <Typography variant="body1" component="p">
           {`Source: ${article.source.name}`}
         </Typography>
-        <Typography variant="body1" component="p">{article.description}</Typography>
+        {article.author && <Typography variant="body1" component="p">{`Author: ${article.author}`}</Typography>}
+        {article.description && <Typography variant="body1" component="p">{article.description}</Typography>}
       </CardContent>
       <div>
         <CardActions>
           <Button variant="contained" color="primary" href={article.url} target="_blank" sx={{ marginTop: '8px' }}>View Full Article</Button>
+          <Button variant="contained" color="primary" onClick={getSummary} sx={{ marginTop: '8px' }}>Summarize This for Me</Button>
         </CardActions>
       </div>
+      <Modal
+        open={showSummary}
+        onClose={() => setShowSummary(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <ModalContent>
+          <Card sx={{ width: '100%', maxWidth: '500px' }}>
+            <HeaderWrapper>
+              <CardHeader title="Summary" />
+              <IconButton onClick={() => setShowSummary(false)}><CloseIcon /></IconButton>
+            </HeaderWrapper>
+
+            <CardContent>
+              {summary ? <Typography variant="body1" component="p">{summary}</Typography> : <Typography variant="body1" component="p">Loading</Typography>}
+            </CardContent>
+          </Card>
+        </ModalContent>
+      </Modal>
     </Wrapper>
   );
 }

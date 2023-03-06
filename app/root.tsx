@@ -24,6 +24,8 @@ function Layout() {
         <Meta />
         <link rel="stylesheet" href="styles/reset.css" />
         <link rel="stylesheet" href="styles/main.css" />
+        <link rel="icon" type="image/svg+xml" href="/assets/icons//favicon/favicon.svg" />
+        <link rel="icon" type="image/png" href="/assets/icons//favicon/favicon.png" />
         <Links />
       </head>
       <body>
