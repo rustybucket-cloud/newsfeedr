@@ -1,4 +1,5 @@
 import { prisma } from '~/utils/db.server';
+import type { LoaderArgs } from '@remix-run/node';
 
 // eslint-disable-next-line import/prefer-default-export
 export async function loader({ request }: LoaderArgs) {
