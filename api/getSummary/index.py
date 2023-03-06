@@ -45,7 +45,7 @@ def get_summary(url):
 
   text = results.text[:2048]
   data = openai.Completion.create(
-    model="ada",
+    model="text-ada-001",
     prompt=f"Summarize this: {text}",
     max_tokens=100,
     temperature=0
