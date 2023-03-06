@@ -5,7 +5,7 @@ import type { Article } from '~/types';
 import { prisma } from '~/utils/db.server';
 
 export const loader = async () => {
-  console.log('Invoke function');
+  throw new Error('Loader');
   try {
     const allArticles = await prisma.request.findMany();
     const mostRecentArticle = allArticles?.[allArticles.length - 1];
