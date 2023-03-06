@@ -2,7 +2,8 @@ import React, { useState, useCallback } from 'react';
 import {
   Card, CardActions, CardContent, CardHeader, CardMedia, Button, Typography, Modal, IconButton,
 } from '@mui/material';
-import { CloseIcon, RotateRightIcon } from '@mui/icons-material';
+import CloseIcon from '@mui/icons-material/Close';
+import RotateRightIcon from '@mui/icons-material/RotateRight';
 import styled from '@emotion/styled';
 import type { Article } from '~/types';
 
