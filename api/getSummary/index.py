@@ -35,7 +35,7 @@ def get_summary(url):
   data = openai.Completion.create(
     model="text-davinci-003",
     prompt=f"Summarize this: {results.text}",
-    max_tokens=50,
+    max_tokens=100,
     temperature=0
   )
   return data["choices"][0]["text"]

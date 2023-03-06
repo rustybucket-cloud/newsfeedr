@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import {
   Card, CardActions, CardContent, CardHeader, CardMedia, Button, Typography, Modal, IconButton,
 } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import { CloseIcon, RotateRightIcon } from '@mui/icons-material';
 import styled from '@emotion/styled';
 import type { Article } from '~/types';
 
@@ -23,6 +23,26 @@ const ModalContent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const Loader = styled.div`
+  width: 100%;  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const LoadingIcon = styled(RotateRightIcon)`
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  animation-name: rotate;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
 `;
 
 export default function ArticleCard({ article }: { article: Article }) {
@@ -67,7 +87,7 @@ export default function ArticleCard({ article }: { article: Article }) {
             </HeaderWrapper>
 
             <CardContent>
-              {summary ? <Typography variant="body1" component="p">{summary}</Typography> : <Typography variant="body1" component="p">Loading</Typography>}
+              {summary ? <Typography variant="body1" component="p">{summary}</Typography> : <Loader><LoadingIcon sx={{ fontSize: 58 }} /></Loader>}
             </CardContent>
           </Card>
         </ModalContent>
