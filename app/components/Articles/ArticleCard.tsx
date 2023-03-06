@@ -49,7 +49,7 @@ const LoadingIcon = styled(RotateRightIcon)`
 export default function ArticleCard({ article }: { article: Article }) {
   const [summary, setSummary] = useState();
   const [showSummary, setShowSummary] = useState(false);
-  const [error, setError] = useState<string>('err');
+  const [error, setError] = useState<string>('');
 
   const getSummary = useCallback(async () => {
     setShowSummary(true);
