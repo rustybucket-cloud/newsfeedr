@@ -5,6 +5,7 @@ import type { Article } from '~/types';
 import { prisma } from '~/utils/db.server';
 
 export const loader = async () => {
+  console.log('Invoke function');
   try {
     const allArticles = await prisma.request.findMany();
     const mostRecentArticle = allArticles?.[allArticles.length - 1];
@@ -21,6 +22,7 @@ export const loader = async () => {
   } catch (error) {
     console.error(error);
   }
+  console.log('Checked for recent request');
   const req = await fetch(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${process.env.NEWS_API_KEY}`);
   const data = await req.json();
   try {

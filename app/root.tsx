@@ -42,15 +42,12 @@ function Layout() {
 
 function App() {
   return (
-    <ThemeProvider mode="LIGHT">
-      <Layout />
-    </ThemeProvider>
-  );
-}
-{ /* <AuthProvider>
+    <AuthProvider>
       <ThemeProvider mode="LIGHT">
         <Layout />
       </ThemeProvider>
-    </AuthProvider> */ }
+    </AuthProvider>
+  );
+}
 
 export default withSentry(App);
