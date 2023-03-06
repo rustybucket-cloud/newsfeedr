@@ -8,6 +8,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from '@remix-run/react';
+import { withSentry } from '@sentry/remix';
 import { Header } from './components';
 import { ThemeProvider } from './contexts';
 
@@ -39,10 +40,12 @@ function Layout() {
   );
 }
 
-export default function App() {
+function App() {
   return (
     <ThemeProvider mode="LIGHT">
       <Layout />
     </ThemeProvider>
   );
 }
+
+export default withSentry(App);

@@ -12,9 +12,7 @@ dir = dirname(abspath(__file__))
 class handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
-        self.send_response(200)
-        self.send_header('Content-type','text/plain')
-        self.end_headers()
+
         o = urlparse(self.path)
         params_list = o.query.split('&')
         params = {}
@@ -22,14 +20,26 @@ class handler(BaseHTTPRequestHandler):
             key, value = param.split('=')
             params[key] = value
         
-        summary = get_summary(params["url"])
-        self.wfile.write(json.dumps({ "summary": summary }).encode())
+        try:
+          summary = get_summary(params["url"])
+          self.send_response(200)
+          data = { "summary": summary }
+        except Exception as e:
+          print(e)
+          self.send_response(500)
+          data = { "error": str(e) }
+        self.send_header('Content-type','text/plain')
+        self.end_headers()
+        self.wfile.write(json.dumps(data).encode())
         return
 
 def get_summary(url):
   req = requests.get(unquote(url))
   soup = BeautifulSoup(req.content, "html.parser")
   results = soup.find('article')
+
+  if results is None:
+    raise Exception("Nothing returned from article")
 
   openai.api_key = os.getenv("OPENAI_API_KEY")
   data = openai.Completion.create(

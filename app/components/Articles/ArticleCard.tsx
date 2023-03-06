@@ -49,12 +49,18 @@ const LoadingIcon = styled(RotateRightIcon)`
 export default function ArticleCard({ article }: { article: Article }) {
   const [summary, setSummary] = useState();
   const [showSummary, setShowSummary] = useState(false);
+  const [error, setError] = useState<string>('err');
 
   const getSummary = useCallback(async () => {
     setShowSummary(true);
-    const req = await fetch(`api/getSummary?url=${article.url}`);
-    const res = await req.json();
-    setSummary(res?.summary);
+    try {
+      const req = await fetch(`api/getSummary?url=${article.url}`);
+      const res = await req.json();
+      setSummary(res?.summary);
+    } catch (err) {
+      console.error(err);
+      setError('We were unable to get the article summary. The website may restrict access to this article.');
+    }
   }, [article.url]);
 
   return (
@@ -88,7 +94,12 @@ export default function ArticleCard({ article }: { article: Article }) {
             </HeaderWrapper>
 
             <CardContent>
-              {summary ? <Typography variant="body1" component="p">{summary}</Typography> : <Loader><LoadingIcon sx={{ fontSize: 58 }} /></Loader>}
+              {error ? <Typography variant="body1" component="p" sx={{ color: 'red' }}>{error}</Typography> : (
+                <>
+                  {summary && <Typography variant="body1" component="p">{summary}</Typography>}
+                  {!summary && <Loader><LoadingIcon sx={{ fontSize: 58 }} /></Loader>}
+                </>
+              )}
             </CardContent>
           </Card>
         </ModalContent>
