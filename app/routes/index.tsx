@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Box, Tabs, Tab } from '@mui/material';
 import { useLoaderData } from '@remix-run/react';
 import { Main, Articles } from '~/components';
 import type { Article } from '~/types';
 import { prisma } from '~/utils/db.server';
+import { useAuth0 } from '@auth0/auth0-react';
 
 export const loader = async () => {
   try {
@@ -33,10 +35,20 @@ export const loader = async () => {
 
 export default function Index() {
   const { articles }: { articles: Article[] } = useLoaderData();
+  const [page, setPage] = useState(0);
+  const { isAuthenticated } = useAuth0();
 
   return (
     <Main>
-      <h1>Trending</h1>
+      {!isAuthenticated && <h1>Trending</h1>}
+      {isAuthenticated && (
+        <Box sx={{ bgcolor: 'background.paper' }}>
+          <Tabs sx={{ borderBottom: '1px solid black' }} indicatorColor="secondary" textColor="secondary" value={page} onChange={(e: React.SyntheticEvent, newValue: number) => setPage(newValue)}>
+            <Tab label="Trending" />
+            <Tab label="For You" />
+          </Tabs>
+        </Box>
+      )}
       <Articles articles={articles} />
     </Main>
   );
