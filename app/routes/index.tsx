@@ -13,7 +13,7 @@ export const loader = async () => {
     if (mostRecentArticle != null) {
       const now = new Date(new Date().toUTCString());
       const mostRecentDate = new Date(mostRecentArticle.createdAt);
-      if (now.getTime() - mostRecentDate.getTime() < 1000 * 60 * 60 * 6) {
+      if (now.getTime() - mostRecentDate.getTime() < 1000 * 60 * 60) {
         const article = JSON.parse(mostRecentArticle.data);
         return article;
       }
