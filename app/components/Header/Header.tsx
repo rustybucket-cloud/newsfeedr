@@ -18,10 +18,14 @@ interface Color {
 }
 
 const Wrapper = styled.div`
+  position: fixed;
+  top: 0;
+  width: 100vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 8px;
+  z-index: 999;
   background-color: ${({ theme }: Color) => theme.secondary.main};
   a {
     text-decoration: none;

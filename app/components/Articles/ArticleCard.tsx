@@ -50,6 +50,7 @@ const FlexButtons = styled(CardActions)`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  z-index: 0;
   [data-btn] {
     width: 100%;
   }
@@ -97,8 +98,8 @@ export default function ArticleCard({ article }: { article: Article }) {
       </CardContent>
       <div>
         <FlexButtons>
-          <Button data-btn variant="contained" color="primary" href={article.url} target="_blank" sx={{ marginTop: '8px' }}>View Full Article</Button>
-          <Button data-btn variant="contained" color="primary" onClick={getSummary} sx={{ marginTop: '8px' }}>Summarize This for Me</Button>
+          <Button data-btn variant="outlined" color="secondary" href={article.url} target="_blank" sx={{ marginTop: '8px' }}>View Full Article</Button>
+          <Button data-btn variant="outlined" color="secondary" onClick={getSummary} sx={{ marginTop: '8px' }}>Summarize This for Me</Button>
         </FlexButtons>
       </div>
       <Modal
