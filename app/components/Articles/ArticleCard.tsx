@@ -76,6 +76,10 @@ export default function ArticleCard({ article }: { article: Article }) {
       else {
         const req = await fetch(`api/getSummary?url=${article.url}`);
         const res = await req.json();
+        if (res.error || res.summary === 'undefined') {
+          setError('We were unable to get the article summary. The website may restrict access to this article.');
+          return;
+        }
         setSummary(res?.summary);
         await fetch(`/isSummary?url=${article.url}&fn=create&summary=${res?.summary}`);
       }

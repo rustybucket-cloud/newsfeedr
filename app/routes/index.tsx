@@ -5,6 +5,12 @@ import { Main, Articles } from '~/components';
 import type { Article } from '~/types';
 import { prisma } from '~/utils/db.server';
 import { useAuth0 } from '@auth0/auth0-react';
+import type { MetaFunction } from '@remix-run/node';
+
+export const meta: MetaFunction = () => ({
+  title: 'Trending Articles',
+  description: 'Get the latest news now',
+});
 
 export const loader = async () => {
   try {

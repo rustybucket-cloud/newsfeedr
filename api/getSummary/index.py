@@ -30,6 +30,9 @@ class handler(BaseHTTPRequestHandler):
           data = { "error": str(e) }
         self.send_header('Content-type','text/plain')
         self.end_headers()
+        if data == None:
+          self.send_response(500)
+          data = { "error": str(e) }
         self.wfile.write(json.dumps(data).encode())
         return
 
